@@ -45,23 +45,23 @@ export default function App() {
 
   if (currentPage === 'login') {
     return (
-      <div className={cn(isDarkMode && 'dark')}>
+      <>
         <div className="fixed top-4 right-4 z-50">
           <ThemeToggle />
         </div>
         <Login onToggle={() => setCurrentPage('signup')} onLogin={handleLogin} />
-      </div>
+      </>
     );
   }
 
   if (currentPage === 'signup') {
     return (
-      <div className={cn(isDarkMode && 'dark')}>
+      <>
         <div className="fixed top-4 right-4 z-50">
           <ThemeToggle />
         </div>
         <Signup onToggle={() => setCurrentPage('login')} onSignup={handleSignup} />
-      </div>
+      </>
     );
   }
 
@@ -112,7 +112,7 @@ export default function App() {
       <VoiceAssistant />
 
       {/* BottomNavBar */}
-      <nav className="fixed bottom-0 w-full z-40 flex justify-around items-center pt-2 pb-8 px-4 bg-white/90 dark:bg-slate-950/90 backdrop-blur-2xl border-t border-outline-variant/10">
+      <nav className="fixed bottom-0 w-full z-40 flex justify-around items-center pt-2 pb-8 px-4 bg-surface/90 backdrop-blur-2xl border-t border-outline-variant/10">
         <NavItem icon="home" label="Home" active />
         <NavItem icon="search" label="Explore" />
         <NavItem icon="bookmark" label="Saved" />

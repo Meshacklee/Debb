@@ -151,7 +151,7 @@ export const VoiceAssistant: React.FC = () => {
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-4 mb-4 w-72 border border-outline-variant/20"
+            className="bg-surface-container-lowest rounded-2xl shadow-2xl p-4 mb-4 w-72 border border-outline-variant/20"
           >
             <div className="flex items-center justify-between mb-2">
               <h4 className="font-headline font-bold text-primary">Live Assistant</h4>
