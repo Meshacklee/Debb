@@ -1,0 +1,5 @@
+{
+  "name": "Debby J",
+  "description": "A curated workspace for digital excellence, featuring AI-powered voice assistance and search-grounded insights.",
+  "requestFramePermissions": ["microphone"]
+}
