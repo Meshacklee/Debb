@@ -15,3 +15,11 @@ export interface Metric {
   icon: string;
   colorClass: string;
 }
+
+export interface GalleryItem {
+  id: string;
+  url: string;
+  title: string;
+  type: string;
+  timestamp: number;
+}

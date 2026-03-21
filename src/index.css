@@ -25,9 +25,27 @@
   --color-outline-variant: #c2c6d1;
 }
 
+@theme dark {
+  --color-primary: #a3c9ff;
+  --color-primary-container: #004b87;
+  --color-on-primary: #003159;
+  --color-secondary: #b5c8e5;
+  --color-secondary-container: #364860;
+  --color-tertiary: #ffb68b;
+  --color-tertiary-container: #793701;
+  --color-surface: #111416;
+  --color-surface-container: #1d2023;
+  --color-surface-container-low: #191c1e;
+  --color-surface-container-lowest: #0c0f11;
+  --color-on-surface: #e1e2e5;
+  --color-on-surface-variant: #c2c6d1;
+  --color-outline: #8c9199;
+  --color-outline-variant: #424750;
+}
+
 @layer base {
   body {
-    @apply font-body bg-surface text-on-surface;
+    @apply font-body bg-surface text-on-surface transition-colors duration-300;
   }
 }
 

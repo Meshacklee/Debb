@@ -2,6 +2,7 @@ import React from 'react';
 import { METRICS, ACTIVITIES } from '../constants';
 import { Button } from './Button';
 import { SearchAssistant } from './SearchAssistant';
+import { Gallery } from './Gallery';
 import { motion } from 'motion/react';
 
 export const Dashboard: React.FC = () => {
@@ -84,6 +85,9 @@ export const Dashboard: React.FC = () => {
           </motion.div>
         ))}
       </div>
+
+      {/* Gallery Section */}
+      <Gallery />
 
       {/* Search Assistant Integration */}
       <section>
