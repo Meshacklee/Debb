@@ -22,4 +22,5 @@ export interface GalleryItem {
   title: string;
   type: string;
   timestamp: number;
+  uid: string;
 }

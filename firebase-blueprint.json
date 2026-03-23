@@ -1,0 +1,24 @@
+{
+  "entities": {
+    "GalleryItem": {
+      "title": "GalleryItem",
+      "description": "An image or design in the gallery",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique ID" },
+        "url": { "type": "string", "description": "Image URL or base64 data" },
+        "title": { "type": "string", "description": "Image title" },
+        "type": { "type": "string", "description": "MIME type" },
+        "timestamp": { "type": "number", "description": "Upload timestamp" },
+        "uid": { "type": "string", "description": "User ID of the owner" }
+      },
+      "required": ["id", "url", "title", "timestamp", "uid"]
+    }
+  },
+  "firestore": {
+    "/gallery": {
+      "schema": "GalleryItem",
+      "description": "Collection of gallery items"
+    }
+  }
+}

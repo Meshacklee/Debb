@@ -1,9 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from './Input';
 import { Button } from './Button';
 import { motion } from 'motion/react';
+import { auth } from '../firebase';
+import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 
-export const Login: React.FC<{ onToggle: () => void; onLogin: () => void }> = ({ onToggle, onLogin }) => {
+export const Login: React.FC<{ onToggle: () => void; onLogin: () => void }> = ({ onToggle }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    setError(null);
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error: any) {
+      console.error('Login error:', error);
+      setError(error.message || 'An error occurred during Google login.');
+    }
+  };
+
+  const handleManualLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setIsLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error: any) {
+      console.error('Manual login error:', error);
+      setError(error.message || 'Invalid email or password.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero Background Section */}
@@ -32,25 +64,57 @@ export const Login: React.FC<{ onToggle: () => void; onLogin: () => void }> = ({
             <p className="text-on-surface-variant">Sign in to your curated workspace.</p>
           </header>
           
-          <form onSubmit={(e) => { e.preventDefault(); onLogin(); }} className="space-y-6">
-            <Input label="Email Address" icon="mail" placeholder="name@atelier.com" type="email" required />
+          {error && (
+            <div className="mb-6 p-4 bg-error/10 border border-error/20 rounded-xl text-error text-sm font-medium">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleManualLogin} className="space-y-6">
+            <Input 
+              label="Email Address" 
+              icon="mail" 
+              placeholder="name@atelier.com" 
+              type="email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required 
+            />
             <div className="space-y-2">
               <div className="flex justify-between items-center px-1">
                 <label className="block text-xs font-bold tracking-widest text-on-surface-variant uppercase">Password</label>
                 <a href="#" className="text-xs font-bold text-primary hover:opacity-70">Forgot Password?</a>
               </div>
-              <Input icon="lock" placeholder="••••••••" type="password" required />
+              <Input 
+                icon="lock" 
+                placeholder="••••••••" 
+                type="password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required 
+              />
             </div>
 
-            <div className="flex items-center space-x-3 px-1">
-              <input type="checkbox" id="remember" className="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" />
-              <label htmlFor="remember" className="text-sm font-medium text-on-surface-variant cursor-pointer">Stay signed in for 30 days</label>
-            </div>
-
-            <Button type="submit" size="full" icon="arrow_forward" className="mt-4">
-              Log In
+            <Button type="submit" size="full" icon="arrow_forward" className="mt-4" disabled={isLoading}>
+              {isLoading ? 'Logging in...' : 'Log In'}
             </Button>
           </form>
+
+          <div className="relative my-8">
+            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-outline-variant/30"></div></div>
+            <div className="relative flex justify-center text-[10px] uppercase tracking-widest text-outline bg-surface-container-lowest px-4 font-bold">Or continue with</div>
+          </div>
+
+          <div className="space-y-4">
+            <Button 
+              onClick={handleGoogleLogin} 
+              size="full" 
+              icon="login" 
+              className="bg-white text-black border border-outline-variant hover:bg-surface-container-low"
+            >
+              Sign in with Google
+            </Button>
+          </div>
 
           <div className="mt-12 text-center">
             <div className="relative mb-8">
