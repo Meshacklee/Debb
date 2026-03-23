@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Dashboard } from './components/Dashboard';
 import { Login } from './components/Login';
 import { Signup } from './components/Signup';
@@ -11,62 +11,21 @@ type Page = 'login' | 'signup' | 'dashboard';
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('login');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const saved = localStorage.getItem('theme');
-    if (saved) return saved === 'dark';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  });
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [isDarkMode]);
-
-  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
   const handleLogin = () => setCurrentPage('dashboard');
   const handleSignup = () => setCurrentPage('dashboard');
   const handleLogout = () => setCurrentPage('login');
 
-  const ThemeToggle = () => (
-    <button 
-      onClick={toggleDarkMode}
-      className="material-symbols-outlined text-primary hover:bg-primary/5 transition-colors p-2 rounded-full"
-      title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-    >
-      {isDarkMode ? 'light_mode' : 'dark_mode'}
-    </button>
-  );
-
   if (currentPage === 'login') {
-    return (
-      <>
-        <div className="fixed top-4 right-4 z-50">
-          <ThemeToggle />
-        </div>
-        <Login onToggle={() => setCurrentPage('signup')} onLogin={handleLogin} />
-      </>
-    );
+    return <Login onToggle={() => setCurrentPage('signup')} onLogin={handleLogin} />;
   }
 
   if (currentPage === 'signup') {
-    return (
-      <>
-        <div className="fixed top-4 right-4 z-50">
-          <ThemeToggle />
-        </div>
-        <Signup onToggle={() => setCurrentPage('login')} onSignup={handleSignup} />
-      </>
-    );
+    return <Signup onToggle={() => setCurrentPage('login')} onSignup={handleSignup} />;
   }
 
   return (
-    <div className="min-h-screen bg-surface text-on-surface pb-32 transition-colors duration-300">
+    <div className="min-h-screen bg-surface text-on-surface pb-32">
       {/* TopAppBar */}
       <header className="fixed top-0 w-full flex justify-between items-center px-6 h-16 bg-surface/80 backdrop-blur-xl z-50 border-b border-outline-variant/10">
         <div className="flex items-center gap-4">
@@ -79,7 +38,6 @@ export default function App() {
           <h1 className="text-xl font-bold tracking-tight text-primary font-headline">Debby J</h1>
         </div>
         <div className="flex items-center gap-4">
-          <ThemeToggle />
           <button 
             onClick={handleLogout}
             className="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/30 hover:ring-2 ring-primary/20 transition-all"
